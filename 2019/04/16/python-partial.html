@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Python Partial | vanderzwaan.dev</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Python Partial" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A short note on Python partials and why it’s awsome." />
+<meta property="og:description" content="A short note on Python partials and why it’s awsome." />
+<link rel="canonical" href="vanderzwaan.dev/2019/04/16/python-partial.html" />
+<meta property="og:url" content="vanderzwaan.dev/2019/04/16/python-partial.html" />
+<meta property="og:site_name" content="vanderzwaan.dev" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-16T02:00:33-05:00" />
+<script type="application/ld+json">
+{"description":"A short note on Python partials and why it’s awsome.","mainEntityOfPage":{"@type":"WebPage","@id":"vanderzwaan.dev/2019/04/16/python-partial.html"},"url":"vanderzwaan.dev/2019/04/16/python-partial.html","@type":"BlogPosting","headline":"Python Partial","dateModified":"2019-04-16T02:00:33-05:00","datePublished":"2019-04-16T02:00:33-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="vanderzwaan.dev/feed.xml" title="vanderzwaan.dev" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126301727-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-126301727-2');
+</script>
+
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Open+Sans" rel="stylesheet"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">vanderzwaan.dev</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Python Partial</h1><p class="page-description">A short note on Python partials and why it's awsome.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-04-16T02:00:33-05:00" itemprop="datePublished">
+        Apr 16, 2019
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>This is a short note on the Python function <code class="language-plaintext highlighter-rouge">partial</code>.</p>
+
+<!--more-->
+
+<p>Partials are very common in functional languages such as <a href="https://www.haskell.org/">Haskell</a> and <a href="https://elm-lang.org/">Elm</a>.</p>
+
+<h2 id="functional-language">Functional language</h2>
+<p>Suppose you need a function to color a line, it would map the position on the line (ranging from 0 to 1) to a RGB color like so
+<em>(for convenience I noted the tuple as <code class="language-plaintext highlighter-rouge">RGB</code> instead of <code class="language-plaintext highlighter-rouge">(Int, Int, Int)</code></em>):</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color</span> <span class="o">::</span> <span class="kt">Position</span> <span class="o">-&gt;</span> <span class="kt">RGB</span>
+</code></pre></div></div>
+
+<p>But we do not want to define a function for, say, all gradients:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">blue_green</span> <span class="o">::</span> <span class="kt">Position</span> <span class="o">-&gt;</span> <span class="kt">RGB</span>
+<span class="n">blue_green</span> <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">255</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="mi">255</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We can now define a function:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gradient</span> <span class="o">::</span> <span class="kt">RGB</span> <span class="o">-&gt;</span> <span class="kt">RGB</span>  <span class="o">-&gt;</span> <span class="kt">Position</span> <span class="o">-&gt;</span> <span class="kt">RGB</span>
+<span class="n">gradient</span> <span class="n">l</span> <span class="n">r</span> <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">l</span> <span class="o">+</span> <span class="n">p</span> <span class="o">*</span> <span class="n">r</span>
+</code></pre></div></div>
+
+<p>However we’re in a bit of a pickle since our line coloring expects a function that maps positions to RGB. Functional languages allow is to simply only pass the first two arguments:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color_function</span> <span class="o">=</span> <span class="n">gradient</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This yields a function that maps positions to RGB and the functionality does not need to know how it was constructed.</p>
+
+<h2 id="python">Python</h2>
+<p>Python has the <code class="language-plaintext highlighter-rouge">partial</code> function to do this.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Target signature and behaviour:
+</span><span class="k">def</span> <span class="nf">color</span> <span class="p">(</span><span class="n">position</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+
+<span class="c1"># Gradient coloring function
+</span><span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">right</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)):</span>
+  <span class="k">return</span> <span class="nb">tuple</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span> <span class="o">*</span> <span class="n">right</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Now get a blue-green coloring function
+</span><span class="n">blue_green</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">right</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Alternatively:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Target signature and behaviour:
+</span><span class="k">def</span> <span class="nf">color</span> <span class="p">(</span><span class="n">position</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+
+<span class="c1"># Gradient coloring function
+</span><span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+  <span class="k">return</span> <span class="nb">tuple</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span> <span class="o">*</span> <span class="n">right</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Now get a blue-green coloring function
+</span><span class="n">blue_green</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</code></pre></div></div>
+
+  </div><a class="u-url" href="/2019/04/16/python-partial.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Blog. My blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/grjzwaan" title="grjzwaan"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Posture of cats: machine learning with fast.ai | vanderzwaan.dev</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Posture of cats: machine learning with fast.ai" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Use the fast.ai library to classify the posture of cats in images." />
+<meta property="og:description" content="Use the fast.ai library to classify the posture of cats in images." />
+<link rel="canonical" href="vanderzwaan.dev/2019/04/10/cature.html" />
+<meta property="og:url" content="vanderzwaan.dev/2019/04/10/cature.html" />
+<meta property="og:site_name" content="vanderzwaan.dev" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-10T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Use the fast.ai library to classify the posture of cats in images.","mainEntityOfPage":{"@type":"WebPage","@id":"vanderzwaan.dev/2019/04/10/cature.html"},"url":"vanderzwaan.dev/2019/04/10/cature.html","@type":"BlogPosting","headline":"Posture of cats: machine learning with fast.ai","dateModified":"2019-04-10T00:00:00-05:00","datePublished":"2019-04-10T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="vanderzwaan.dev/feed.xml" title="vanderzwaan.dev" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126301727-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-126301727-2');
+</script>
+
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Open+Sans" rel="stylesheet"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">vanderzwaan.dev</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Posture of cats: machine learning with fast.ai</h1><p class="page-description">Use the fast.ai library to classify the posture of cats in images.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-04-10T00:00:00-05:00" itemprop="datePublished">
+        Apr 10, 2019
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>During a spare hour I decided to see how fast I could prototype something with the fast.ai library. The library is impressive, I can’t say otherwise. Very quickly I got a working prototype. The result was a fairly decent model to recognize the posture of a cat.</p>
+
+<!--more-->
+<h2 id="fastai-library">Fast.ai library</h2>
+<p>Recently I’ve decided to take a look at <a href="https://course.fast.ai">fast.ai</a>, their course and their library. The best way to do this is to try something and it’s very likely you’ll end up with a cat-related topic. With my desk oriented towards the spot my cat was chilling, I decided to take the library for a spin and recognize cat postures.</p>
+
+<p>To make the post self-contained I’ll note the snippets of code needed. As you’ll see it’s actually very little code - and every line is clear on what it does.</p>
+
+<p>Note: Most of the code was copied from the example notebook in the course of fast.ai.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fastai.vision</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">fastai.metrics</span> <span class="kn">import</span> <span class="n">error_rate</span>
+</code></pre></div></div>
+
+<h2 id="the-postures">The postures</h2>
+<p>I picked the first four postures that came to mind:</p>
+
+<ul>
+  <li>Lounging</li>
+  <li>Curled up</li>
+  <li>Sitting</li>
+  <li>Walking</li>
+</ul>
+
+<p><img src="postures.png" alt="Example images of cats with different postures." /></p>
+
+<h2 id="getting-the-data">Getting the data</h2>
+<p>There are some pictures of my cat but not sufficient. He is very lazy and is predominantly curled up.
+In the course of fast.ai they discussed the option to just use Google searches to get a dataset quickly. I have done this before, but they had some nice helpers to really make it a smooth experience:</p>
+
+<p>1) Do a Google Image search yourself. For example, search for “cats curled up”</p>
+
+<p>2) Run a JavaScript script they supply and obtain a file with urls</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">urls</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">'</span><span class="s1">.rg_di .rg_meta</span><span class="dl">'</span><span class="p">)).</span><span class="nx">map</span><span class="p">(</span><span class="nx">el</span><span class="o">=&gt;</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">el</span><span class="p">.</span><span class="nx">textContent</span><span class="p">).</span><span class="nx">ou</span><span class="p">);</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">'</span><span class="s1">data:text/csv;charset=utf-8,</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">escape</span><span class="p">(</span><span class="nx">urls</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="dl">'</span><span class="se">\n</span><span class="dl">'</span><span class="p">)));</span>
+</code></pre></div></div>
+<p>3) Run a function from their library to download and verify the images</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">download_images</span><span class="p">(</span><span class="s">'path/urls_cats.csv'</span><span class="p">,</span> <span class="s">'path/where/to/download/images'</span><span class="p">,</span> <span class="n">max_pics</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">verify_images</span><span class="p">(</span><span class="s">'path/where/to/download/images'</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+</code></pre></div></div>
+<p>4) Create a dataset</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># Set a fixed seed to always get the same train-validation split
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">ImageDataBunch</span><span class="p">.</span><span class="n">from_folder</span><span class="p">(</span><span class="s">"path/to/images"</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="s">"."</span><span class="p">,</span> <span class="n">valid_pct</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">ds_tfms</span><span class="o">=</span><span class="n">get_transforms</span><span class="p">(),</span> <span class="n">size</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">).</span><span class="n">normalize</span><span class="p">(</span><span class="n">imagenet_stats</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="training-the-neural-network">Training the neural network</h2>
+<p>Training the neural network is actually very simple</p>
+
+<p>5) Create the neural network:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">learn</span> <span class="o">=</span> <span class="n">cnn_learner</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">models</span><span class="p">.</span><span class="n">resnet50</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">error_rate</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>6) Find a a good learning rate:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">learn</span><span class="p">.</span><span class="n">lr_find</span><span class="p">(</span><span class="n">start_lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+<span class="n">learn</span><span class="p">.</span><span class="n">recorder</span><span class="p">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>7) Train the neural network:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">learn</span><span class="p">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">max_lr</span><span class="o">=</span><span class="mf">2e-2</span><span class="p">)</span>
+</code></pre></div></div>
+<p>There are some additional steps you can take to further finetune the model, but notice how easy it is?</p>
+<h2 id="performance">Performance</h2>
+<p>The performance was actually quite decent: an error rate of 17%. Especially if you realize that the the distinction between classes is fuzzy and can be subtle.
+The images that the google search returned quite often confused lounging with curled up and sitting with lounging.</p>
+
+<p>Even I’m not totally clear on the distinction between lounging and curled up in some cases :)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">interp</span> <span class="o">=</span> <span class="n">ClassificationInterpretation</span><span class="p">.</span><span class="n">from_learner</span><span class="p">(</span><span class="n">learn</span><span class="p">)</span>
+<span class="n">interp</span><span class="p">.</span><span class="n">plot_confusion_matrix</span><span class="p">()</span>
+</code></pre></div></div>
+<p><img src="confusion.png" alt="Confusion matrix of the results." /></p>
+
+<p>Let’s plot the images the model was the most confused about, and highlight the areas that the model was focused on:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">interp</span><span class="p">.</span><span class="n">plot_top_losses</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span>
+</code></pre></div></div>
+<p><img src="toploss.png" alt="The examples where the algorithms makes the largest mistakes." /></p>
+
+<h2 id="improvements">Improvements</h2>
+<p>As you can see in the top losses, the samples contain some images that are no good: multiple cats or to far zoomed in. The easiest thing to do would be to get a better dataset and make a clear distinction between the classes.</p>
+
+<h2 id="how-does-it-work">How does it work</h2>
+<p>The cool thing fast.ai did in their course is to encode as many best practices in the library as they can.
+This means that you don’t start with a neural network from scratch: you take a network architecture that is tested in practices, is pretrained and <em>you get sensible defaults</em>.</p>
+
+<p>In my case I used <a href="https://www.kaggle.com/keras/resnet50">ResNet50</a> and then fine-tuned it with the cat data.
+This means you’re getting a lot for free!</p>
+
+  </div><a class="u-url" href="/2019/04/10/cature.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Blog. My blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/grjzwaan" title="grjzwaan"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
