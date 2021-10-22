@@ -11,7 +11,7 @@
 @import "minima/fastpages-dracula-highlight"; 
 
 
-.post-link .post-title {
+.post-link, .post-title {
   background-image: linear-gradient(to right bottom, #00c3ff, #ffff1c);
   background-clip: text;
   -webkit-background-clip: text;
