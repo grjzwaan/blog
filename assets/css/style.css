@@ -482,6 +482,6 @@ pre code { font-size: 15px !important; }
 
 p code { font-size: 19px; }
 
-.post-link .post-title { background: -webkit-linear-gradient(#00c3ff, #ffff1c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.post-link .post-title { background-image: linear-gradient(60deg, #00c3ff, #ffff1c); background-clip: text; -webkit-background-clip: text; color: transparent; }
 
 /*# sourceMappingURL=style.css.map */
