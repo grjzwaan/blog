@@ -331,7 +331,7 @@ img.emoji { display: inline !important; vertical-align: baseline !important; }
 
 .page-content { -webkit-font-smoothing: antialiased !important; text-rendering: optimizeLegibility !important; font-family: "Roboto", sans-serif; /* font-family: "Segoe UI", SegoeUI, Roboto, "Segoe WP", "Helvetica Neue", "Helvetica", "Tahoma", "Arial", sans-serif !important; */ }
 
-h1, h2, h3, h4, h5, h6 { font-family: "Libre Baskerville", serif; }
+h1, h2, h3, h4, h5, h6 { font-family: "Exo", sans-serif; }
 
 .post-content p, .post-content li { font-size: 20px; color: #515151; }
 
@@ -481,5 +481,7 @@ pre code { font-size: 15px !important; }
 .highlight .gd { color: #ff5555; }
 
 p code { font-size: 19px; }
+
+.post-title { background: -webkit-linear-gradient(#eee, #333); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
 /*# sourceMappingURL=style.css.map */
