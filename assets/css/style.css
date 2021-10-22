@@ -482,6 +482,6 @@ pre code { font-size: 15px !important; }
 
 p code { font-size: 19px; }
 
-.post-link .post-title { background-image: linear-gradient(60deg, #00c3ff, #ffff1c); background-clip: text; -webkit-background-clip: text; color: transparent; }
+@supports (background-clip: text) { .post-link .post-title { background-image: linear-gradient(to right bottom, #00c3ff, #ffff1c); background-clip: text; -webkit-background-clip: text; -moz-background-clip: text; color: transparent; text-transform: uppercase; font-weight: 800; } }
 
 /*# sourceMappingURL=style.css.map */
