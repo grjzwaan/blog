@@ -155,13 +155,8 @@ window.onload = wrap_img;
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<table>
-    <tr>
-        <td> <img src="qrcode.png" /> </td>
-        <td> &lt; </td>
-        <td> <img src="animation.gif" /> </td>  
-    </tr>
-</table>
+<p><img src="/images/copied_from_nb/animation.gif" alt="" /> <img src="qrcode.png" alt="" /></p>
+
 </div>
 </div>
 </div>
@@ -388,8 +383,10 @@ window.onload = wrap_img;
             <span class="n">bit</span> <span class="o">=</span> <span class="n">bits</span><span class="p">[</span><span class="n">current_bit</span><span class="p">]</span>
             
             <span class="c1"># Get the possible actions</span>
-            <span class="n">possible_actions</span> <span class="o">=</span> <span class="p">[</span> <span class="n">action</span> <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">actions</span> 
-                                <span class="k">if</span> <span class="ow">not</span> <span class="n">matrix</span><span class="p">[</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">snake</span><span class="p">[</span><span class="s1">&#39;position&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">action</span> <span class="o">@</span> <span class="n">snake</span><span class="p">[</span><span class="s1">&#39;orientation&#39;</span><span class="p">])</span> <span class="p">]</span> <span class="p">]</span>
+            <span class="n">possible_actions</span> <span class="o">=</span> <span class="p">[</span> 
+                <span class="n">action</span> <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">actions</span> 
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">matrix</span><span class="p">[</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">snake</span><span class="p">[</span><span class="s1">&#39;position&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">action</span> <span class="o">@</span> <span class="n">snake</span><span class="p">[</span><span class="s1">&#39;orientation&#39;</span><span class="p">])</span> <span class="p">]</span> 
+            <span class="p">]</span>
 
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">possible_actions</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">snake</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
@@ -446,26 +443,43 @@ window.onload = wrap_img;
 
     
     <span class="c1"># Define a transparant layer</span>
-    <span class="n">transparent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">canvas_size</span><span class="p">,</span> <span class="n">canvas_size</span><span class="p">,</span> <span class="mi">4</span><span class="p">)))</span>
+    <span class="n">transparent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> 
+        <span class="p">(</span><span class="n">canvas_size</span><span class="p">,</span> <span class="n">canvas_size</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">))</span>
     
-    <span class="c1"># Define the bottom layer</span>
-    <span class="n">composite</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;RGBA&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">canvas_size</span><span class="p">,</span> <span class="n">canvas_size</span><span class="p">),</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">))</span>
+    <span class="c1"># Define the bottom layer (transparent white)</span>
+    <span class="n">composite</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+        <span class="s1">&#39;RGBA&#39;</span><span class="p">,</span> 
+        <span class="p">(</span><span class="n">canvas_size</span><span class="p">,</span> <span class="n">canvas_size</span><span class="p">),</span> 
+        <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+    <span class="p">)</span>
 
     <span class="c1"># Draw each trail</span>
     <span class="k">for</span> <span class="n">snake</span> <span class="ow">in</span> <span class="n">snakes</span><span class="p">:</span>
+        <span class="c1"># Get the trail until this frame</span>
         <span class="n">trail</span> <span class="o">=</span> <span class="n">snake</span><span class="p">[</span><span class="s1">&#39;trail&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">snake</span><span class="p">[</span><span class="s1">&#39;trail&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">frame</span><span class="p">)</span>
+        
+        <span class="c1"># Get theecoor</span>
         <span class="n">color</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">snake</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
-
-        <span class="n">picture</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">trail</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-
-        <span class="n">picture</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">color</span><span class="p">(</span><span class="n">trail</span> <span class="o">/</span> <span class="n">trail</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">*</span><span class="mi">255</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">trail</span> <span class="o">&gt;</span> <span class="mf">0.</span><span class="p">)[:,:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">trail</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">color</span><span class="p">(</span><span class="n">trail</span> <span class="o">/</span> <span class="n">trail</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">*</span><span class="mi">255</span><span class="p">),</span> <span class="n">transparent</span><span class="p">)</span>
+        
+        <span class="c1"># Set the trail and rest transparent</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">trail</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> 
+            <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">color</span><span class="p">(</span><span class="n">trail</span> <span class="o">/</span> <span class="n">trail</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>  <span class="o">*</span><span class="mi">255</span><span class="p">),</span> 
+            <span class="n">transparent</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Create an image and add the layer</span>
         <span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-
         <span class="n">composite</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">alpha_composite</span><span class="p">(</span><span class="n">composite</span><span class="p">,</span> <span class="n">im</span><span class="p">)</span>
 
     <span class="n">d</span> <span class="o">=</span> <span class="n">ImageDraw</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">composite</span><span class="p">)</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">rectangle</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">canvas_size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">canvas_size</span><span class="o">-</span><span class="mi">1</span><span class="p">)],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outline</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span>
+        <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">canvas_size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">canvas_size</span><span class="o">-</span><span class="mi">1</span><span class="p">)],</span> 
+        <span class="n">fill</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+        <span class="n">outline</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span> 
+        <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">composite</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">5</span> <span class="o">*</span> <span class="n">canvas_size</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">canvas_size</span><span class="p">),</span> <span class="n">Image</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">)</span>
 
@@ -536,7 +550,8 @@ window.onload = wrap_img;
 
 <span class="n">gif</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;animation.gif&#39;</span><span class="p">,</span> 
          <span class="n">save_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-         <span class="n">append_images</span><span class="o">=</span><span class="p">[</span><span class="n">generate_image</span><span class="p">(</span><span class="n">snakes</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">frame</span><span class="p">,</span> <span class="n">canvas_size</span><span class="o">=</span><span class="n">canvas_size</span><span class="p">)</span> <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iteration</span><span class="p">)],</span>
+         <span class="n">append_images</span><span class="o">=</span><span class="p">[</span><span class="n">generate_image</span><span class="p">(</span><span class="n">snakes</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">frame</span><span class="p">,</span> <span class="n">canvas_size</span><span class="o">=</span><span class="n">canvas_size</span><span class="p">)</span> 
+                        <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iteration</span><span class="p">)],</span>
          <span class="n">duration</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
          <span class="n">loop</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
