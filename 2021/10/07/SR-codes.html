@@ -41,6 +41,22 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
 
 <script>
 function wrap_img(fn) {
@@ -98,7 +114,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      5 min read
     
 </span></p>
 
@@ -148,7 +164,6 @@ window.onload = wrap_img;
 <li>Not quick. Savour the wait before you can scan the code.</li>
 </ul>
 <p>Developing a scanner app is left as an exercise for the reader :)</p>
-<p>Seriously: QR codes are seriously interesting. Error correction and packing as much information as you can in a small amount of pixels while keeping it robust is a nice challenge.</p>
 
 </div>
 </div>
@@ -162,13 +177,15 @@ window.onload = wrap_img;
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Snake-Race-code-implementation">Snake Race code implementation<a class="anchor-link" href="#Snake-Race-code-implementation"> </a></h2>
+<p>QR codes are really interesting. Error correction and packing as much information as you can in a small amount of pixels while keeping it robust is a nice challenge.</p>
+<p>Nice explanation in Dutch <a href="https://michielp1807.github.io/qr-codes/">https://michielp1807.github.io/qr-codes/</a> or check out the <a href="https://en.wikipedia.org/wiki/QR_code">Wikipedia page</a>.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Representing-position-and-orientation">Representing position and orientation<a class="anchor-link" href="#Representing-position-and-orientation"> </a></h3>
+<h2 id="Representing-position-and-orientation">Representing position and orientation<a class="anchor-link" href="#Representing-position-and-orientation"> </a></h2>
 </div>
 </div>
 </div>
@@ -297,7 +314,7 @@ window.onload = wrap_img;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Trails">Trails<a class="anchor-link" href="#Trails"> </a></h3><p>We want to see where the snakes have been as well as their current position. Below we define:</p>
+<h3 id="Going-places">Going places<a class="anchor-link" href="#Going-places"> </a></h3><p>We want to see where the snakes have been as well as their current position. Below we define:</p>
 <ul>
 <li>The different snakes in <code>snakes</code>, including start position, color and trail</li>
 <li>For each snake we also keep track if they are active. The snake stops if there is no valid move to make.</li>
@@ -360,6 +377,8 @@ window.onload = wrap_img;
 
     <span class="c1"># Keep track of where the snakes have passed</span>
     <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">size</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">+</span><span class="mi">2</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+    
+    <span class="c1"># Set the borders</span>
     <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">matrix</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">matrix</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="kc">True</span>
@@ -427,7 +446,7 @@ window.onload = wrap_img;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Some code that generates the image at a certain frame/point in time:</p>
+<h3 id="Showing-it-on-screen">Showing it on screen<a class="anchor-link" href="#Showing-it-on-screen"> </a></h3><p>Some code that generates the image at a certain frame/point in time:</p>
 
 </div>
 </div>
@@ -482,10 +501,30 @@ window.onload = wrap_img;
         <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">composite</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">5</span> <span class="o">*</span> <span class="n">canvas_size</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">canvas_size</span><span class="p">),</span> <span class="n">Image</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">)</span>
+</pre></div>
 
+    </div>
+</div>
+</div>
 
-<span class="c1"># Some settings</span>
-<span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For this piece of code we'll generate 500 bits on a canvas of 22x22. The bits are not generated efficiently.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">nr_bits</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">size</span> <span class="o">=</span> <span class="mi">22</span>
 
@@ -534,7 +573,7 @@ window.onload = wrap_img;
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally we create a GIF image</p>
+<h2 id="Animation">Animation<a class="anchor-link" href="#Animation"> </a></h2><p>Finally we create a GIF image</p>
 
 </div>
 </div>
