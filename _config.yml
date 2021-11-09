@@ -69,6 +69,7 @@ include:
   - _pages
   - _pages/2019
   - _pages/2020
+  - _pages/2021
 
 # This specifies what badges are turned on by default for notebook posts.
 default_badges:
