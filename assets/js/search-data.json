@@ -2,8 +2,8 @@
   
     
         "post0": {
-            "title": "Title",
-            "content": "import matplotlib.pyplot as plt from sklearn import linear_model import numpy as np from matplotlib.collections import LineCollection from matplotlib.colors import ListedColormap, BoundaryNorm . x = [[4*60+22], [4*60+6], [3*60+21], [5*60+25], [3*60+8]] y = [2_762_823, 6_184_448, 4_826_424, 3_544_263, 1_249_864] . reg = linear_model.LinearRegression() reg.fit(x, y) . LinearRegression() . p = np.array([[p] for p in np.linspace(3*60, 6*60, 20)]) yhat = reg.predict(p) . fig, ax = plt.subplots() # Scatter plt.scatter(x, y, c=y, cmap=&#39;plasma&#39;) plt.plot(p, yhat, color=&quot;green&quot;, linewidth=3) plt.colorbar() plt.ylabel(&#39;#Streams&#39;) plt.xlabel(&#39;Duration (s)&#39;) plt.show() .",
+            "title": "PyPlot and Pylot",
+            "content": "import matplotlib.pyplot as plt from sklearn import linear_model import numpy as np from matplotlib.collections import LineCollection from matplotlib.colors import ListedColormap, BoundaryNorm . The data . x = [[4*60+22], [4*60+6], [3*60+21], [5*60+25], [3*60+8]] y = [2_762_823, 6_184_448, 4_826_424, 3_544_263, 1_249_864] . Linear regression . reg = linear_model.LinearRegression() reg.fit(x, y) . LinearRegression() . p = np.array([[p] for p in np.linspace(3*60, 6*60, 20)]) yhat = reg.predict(p) . fig, ax = plt.subplots() # Scatter plt.scatter(x, y, c=y, cmap=&#39;plasma&#39;) plt.plot(p, yhat, color=&quot;pink&quot;, linewidth=3) plt.colorbar() plt.ylabel(&#39;#Streams&#39;) plt.xlabel(&#39;Duration (s)&#39;) plt.show() .",
             "url": "vanderzwaan.dev/2022/01/02/PyPlot-and-Pylot.html",
             "relUrl": "/2022/01/02/PyPlot-and-Pylot.html",
             "date": " • Jan 2, 2022"
