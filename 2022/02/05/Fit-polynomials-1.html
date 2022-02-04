@@ -315,18 +315,16 @@ $$ \min_{p_k(x)}  \sum_i ( y_i - p_k(x_i) )^2 = \min_{p_k(x)}  ||  y_i - p_k(x_i
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can do this in matrix form and state $M_k(x)c=y$, where $M_k(x)$ is the matrix for the values $x$ and the powers up to $k$ (the <em>monomials</em>):</p>
-<p>For $k=2$ it would be 
-\begin{equation*}
-M_2(x) = 
-\begin{pmatrix}
+<p>For $k=2$ it would be</p>
+$$M_2(x) = 
+\begin{bmatrix}
 1 &amp; -1 &amp; 1 \\
 1 &amp; -.5 &amp; .25 \\
 1 &amp; 0 &amp; 0 \\
 1 &amp; .5 &amp; .25 \\
 1 &amp; 1 &amp; 1 \\
-\end{pmatrix}
-\end{equation*}</p>
-
+\end{bmatrix}
+$$
 </div>
 </div>
 </div>
@@ -395,13 +393,15 @@ $$ min_c ||y - M_k(x)c||_2 $$
 <p>For $n$ points there exists a unique polynomial of degree $n-1$ that passes through these points. To find this polynomial we can solve a linear system of $n$ equations with $n$ variables.</p>
 <h2 id="Example-for-n=2">Example for n=2<a class="anchor-link" href="#Example-for-n=2"> </a></h2><p>As an example take the points $(-0.5,0.25), (0, 0), (0.5, 0.25)$ and we want to find a quadratic polynomial $p(x) = c_0 + c_1 \cdot x + c_2 \cdot x^2$.</p>
 <p>The linear equations will be
-$$
-\begin{align}
-p(-0.5) &amp;= 0.25  = c_0 + c_1 \cdot -0.5 + c_2 \cdot (-0.5)^2 \\
-p(0) &amp;= 0 = c_0 + c_1 \cdot 0. + c_2 \cdot 0^2 \\
-p(0.5) &amp;= 0.25  = c_0 + c_1 \cdot 0.5 + c_2 \cdot (0.5)^2
-\end{align}
-$$</p>
+
+$$p(-0.5) = 0.25  = c_0 + c_1 \cdot -0.5 + c_2 \cdot (-0.5)^2 $$
+
+
+$$p(0) = 0 = c_0 + c_1 \cdot 0. + c_2 \cdot 0^2 $$
+
+
+$$p(0.5) = 0.25  = c_0 + c_1 \cdot 0.5 + c_2 \cdot (0.5)^2 $$
+</p>
 <p>For this example we can solve by hand by noting that $c_0=0$ (second equation), which leaves
 
 $$ 0.25 = -c_1/2 + c_2/4 $$
@@ -425,16 +425,14 @@ $$ 0.25  = c_1/2 + c_2/4 $$
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In general we can do this with the matrix of monomials (Vandermonde matrix) and solving the linear equation.</p>
 <p>We can do this in matrix form and state $M_{n-1}(x)c=y$, where $M_{n-1}(x)$ is the Vandermonde matrix for the values $x$ and the powers.</p>
-<p>For the previous example it would be 
-\begin{equation*}
-A_2(x) = 
-\begin{pmatrix}
+<p>For the previous example it would be</p>
+$$A_2(x) = 
+\begin{bmatrix}
 1 &amp; -\frac{1}{2} &amp; \frac{1}{4} \\
 1 &amp; 0 &amp; 0 \\
 1 &amp; \frac{1}{2} &amp; \frac{1}{4} \\
-\end{pmatrix}
-\end{equation*}</p>
-<p>Then we solve $Ac=y$ for $c$. For example by taking the inverse $A^{-1}y=c$.</p>
+\end{bmatrix}
+$$<p>Then we solve $Ac=y$ for $c$. For example by taking the inverse $A^{-1}y=c$.</p>
 
 </div>
 </div>
