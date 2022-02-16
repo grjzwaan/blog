@@ -10,13 +10,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Short note on matrix inversion and why to prefer solve. Uses Hilbert matrices!" />
 <meta property="og:description" content="Short note on matrix inversion and why to prefer solve. Uses Hilbert matrices!" />
-<link rel="canonical" href="vanderzwaan.dev/2022/02/14/Matrix-inversion.html" />
-<meta property="og:url" content="vanderzwaan.dev/2022/02/14/Matrix-inversion.html" />
+<link rel="canonical" href="vanderzwaan.dev/2022/02/15/Matrix-inversion.html" />
+<meta property="og:url" content="vanderzwaan.dev/2022/02/15/Matrix-inversion.html" />
 <meta property="og:site_name" content="vanderzwaan.dev" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2022-02-14T00:00:00-06:00" />
+<meta property="article:published_time" content="2022-02-15T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"Short note on matrix inversion and why to prefer solve. Uses Hilbert matrices!","mainEntityOfPage":{"@type":"WebPage","@id":"vanderzwaan.dev/2022/02/14/Matrix-inversion.html"},"url":"vanderzwaan.dev/2022/02/14/Matrix-inversion.html","@type":"BlogPosting","headline":"Matrix inversion or solve","dateModified":"2022-02-14T00:00:00-06:00","datePublished":"2022-02-14T00:00:00-06:00","@context":"https://schema.org"}</script>
+{"description":"Short note on matrix inversion and why to prefer solve. Uses Hilbert matrices!","mainEntityOfPage":{"@type":"WebPage","@id":"vanderzwaan.dev/2022/02/15/Matrix-inversion.html"},"url":"vanderzwaan.dev/2022/02/15/Matrix-inversion.html","@type":"BlogPosting","headline":"Matrix inversion or solve","dateModified":"2022-02-15T00:00:00-06:00","datePublished":"2022-02-15T00:00:00-06:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="vanderzwaan.dev/feed.xml" title="vanderzwaan.dev" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -107,8 +107,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Matrix inversion or solve</h1><p class="page-description">Short note on matrix inversion and why to prefer solve. Uses Hilbert matrices!</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-02-14T00:00:00-06:00" itemprop="datePublished">
-        Feb 14, 2022
+    <h1 class="post-title p-name" itemprop="name headline">Matrix inversion or solve</h1><p class="page-description">Short note on matrix inversion and why to prefer solve. Uses Hilbert matrices!</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-02-15T00:00:00-06:00" itemprop="datePublished">
+        Feb 15, 2022
       </time>
        • <span class="read-time" title="Estimated read time">
     
@@ -157,22 +157,24 @@ window.onload = wrap_img;
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The short advice is always to solve for $x$ in linear equations $Ax=y$ with (for example) LU-decomposition, and don't do $A^{-1}y$. By why <em>exactly</em>?</p>
 <p>This post came to be after reading <a href="http://gregorygundersen.com/blog/2020/12/09/matrix-inversion/">Why Shouldn't I Invert That Matrix</a> by Gregory Gundersen. He does an exellent job on describing matrix inversion, LU-decomposition and (ill) conditioned matrices. I'll repeat some terms here.</p>
-<p>The argument is that solving is <em>faster</em> and <em>more precise</em>:</p>
+<p>The argument is that solving is <em>faster</em> and <em>more precise</em> than inversion:</p>
 <ul>
 <li>LU decomposition requires less floating point operations than (plain) matrix inversion.</li>
 <li>Floating point operations are less precise, so more lead to larger errors.</li>
 </ul>
-<p>I'll not go into the computational complexity, read the above post for a nice explanation. We are not solving symbolically but with 32 (or 64) bit floats. For example $0.1$ cannot be represented as a float: <a href="https://www.exploringbinary.com/why-0-point-1-does-not-exist-in-floating-point/">see this article</a>. The more operations we execute the more potential there is for errors.</p>
-<p>In mathematics both methods are precise if we solve symbolically. In mathematics there is the <em>condition number</em> of matrices, a higher condition number means that small changes in $A$ lead to large changes in $x$. This seems exactly the intuition that we need to explore under what conditions we can expect more errors, and the difference between two methods is more pronounced.</p>
 <p>In this post I use matrices related to polynomial interpolation, including Hilbert matrices. Hilbert matrices are <em>ill-conditioned</em>, so we expect that inversion will be bad.</p>
+<h2 id="Precision-and-floats">Precision and floats<a class="anchor-link" href="#Precision-and-floats"> </a></h2><p>I'll not go into the computational complexity, read the above post for a nice explanation. We are not solving symbolically but with 32 (or 64) bit floats. For example $0.1$ cannot be represented as a float: <a href="https://www.exploringbinary.com/why-0-point-1-does-not-exist-in-floating-point/">see this article</a>. The more operations we execute the more potential there is for errors.</p>
+<p>In mathematics both methods are precise if we solve symbolically. In mathematics there is the <em>condition number</em> of matrices, a higher condition number means that small changes in $A$ lead to large changes in $x$. This seems exactly the intuition that we need to explore under what conditions we can expect more errors, and the difference between two methods is more pronounced.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can solve $Ax=y$ with the LU-decomposition $A=LU$ and then solve $Lz=x$ and then $Ux = z$. Since $L$ and $U$ are triangular matrices this is straightforward.</p>
-<p>The NumPy function <code>solve</code> does this with the method from LAPACK. We create an example from polynomial interpolation of the function $f(x)=x^2$ on the points $\{-\frac{1}{2},0,\frac{1}{2}\}$:</p>
+<h2 id="Solve-$Ax=y$">Solve $Ax=y$<a class="anchor-link" href="#Solve-$Ax=y$"> </a></h2><p>We can solve $Ax=y$ with the LU-decomposition $A=LU$ and then solve $Lz=x$ and then $Ux = z$. Since $L$ and $U$ are triangular matrices this is straightforward.
+With triangular matrices you can start with an equation with one variable, solve it and continue.
+There'll always be an equation on a single variable (that you didn't solve yet).</p>
+<p>Finding the decomposition is the tricky part. The NumPy function <code>solve</code> does this with the method from LAPACK. We create an example from polynomial interpolation of the function $f(x)=x^2$ on the points $\{-\frac{1}{2},0,\frac{1}{2}\}$:</p>
 
 </div>
 </div>
@@ -652,7 +654,7 @@ window.onload = wrap_img;
 
 
 
-  </div><a class="u-url" href="/2022/02/14/Matrix-inversion.html" hidden></a>
+  </div><a class="u-url" href="/2022/02/15/Matrix-inversion.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
