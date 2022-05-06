@@ -752,13 +752,11 @@ $$</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Setting these to zero we get a system of equations:</p>
-$$ 
 \begin{aligned}
 c_0 \int_{-1}^1 L_0(x) \cdot L_0(x) dx &amp;+ c_1 \int_{-1}^1 L_0(x) \cdot L_1(x) dx  &amp;+ c_2 \int_{-1}^1 L_0(x) \cdot L_2(x) dx &amp;= \int_{-1}^1 L_0(x) f(x) dx \\
 c_0 \int_{-1}^1 L_1(x) \cdot L_0(x) dx &amp;+ c_1 \int_{-1}^1 L_1(x) \cdot L_1(x) dx  &amp;+ c_2 \int_{-1}^1 L_1(x) \cdot L_2(x) dx &amp;= \int_{-1}^1 L_1(x) f(x) dx \\
 c_0 \int_{-1}^1 L_1(x) \cdot L_0(x) dx &amp;+ c_1 \int_{-1}^1 L_2(x) \cdot L_1(x) dx  &amp;+ c_2 \int_{-1}^1 L_2(x) \cdot L_2(x) dx &amp;= \int_{-1}^1 L_2(x) f(x) dx \\
 \end{aligned}
-$$
 </div>
 </div>
 </div>
@@ -827,14 +825,11 @@ $$  P_k = ((2k-1)x P_{k-1}(x) - (k-1) P_{k-2}(x))/k $$
 </p>
 <p>with $$ P_1 = x $$</p>
 <p>The idea is that we substitute and use orthogonality:</p>
-$$
 \begin{align}
 F_k = \int_{-1}^1 P_k \cdot P_k dx &amp;= k^{-1} \int_{-1}^1 ((2k-1) x \cdot P_{k-1} \cdot P_{k}) - (k-1) \cdot P_{k-2} \cdot P_{k} dx \\
 &amp;= \frac{2k-1}{k} \int_{-1}^1 x \cdot P_{k-1} \cdot P_{k} dx - \frac{k-1}{k} \cdot \int_{-1}^1 P_{k-2} \cdot P_{k} dx \\
 &amp;= \frac{2k-1}{k} \int_{-1}^1  x \cdot P_{k-1} \cdot P_{k} dx \\
-\end{align}
-$$<p>
-because $P_k \cdot P_q = 0$ for $k\neq q$.</p>
+\end{align}<p>because $P_k \cdot P_q = 0$ for $k\neq q$.</p>
 
 </div>
 </div>
@@ -852,7 +847,6 @@ $$x P_{k} = \left( (k+1)P_{k+1} + k P_{k-1} \right) / (2k+1)$$
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-$$
 \begin{align}
 F_k  &amp;= \frac{2k-1}{k} \int_{-1}^1  x \cdot P_{k} \cdot P_{k-1} dx \\
 &amp;= \frac{2k-1}{k} \int_{-1}^1  P_{k-1} \cdot \left( (k+1)P_{k+1} + k P_{k-1} \right) / (2k+1) dx \\
@@ -861,9 +855,7 @@ F_k  &amp;= \frac{2k-1}{k} \int_{-1}^1  x \cdot P_{k} \cdot P_{k-1} dx \\
 &amp;= \frac{2k-1}{2k+1} \cdot \frac{2k-3}{2k-1} F_{k-2} \\
 &amp;= \frac{1}{2k+1} F_{0} \\
 &amp;= \frac{2}{2k+1}
-\end{align}
-$$<p></p>
-<p>because
+\end{align}<p>because
 
 $$F_{0} = \int_{-1}^1 P_0(x)^2 dx = \int_{-1}^1 1 dx = 2$$
 </p>
