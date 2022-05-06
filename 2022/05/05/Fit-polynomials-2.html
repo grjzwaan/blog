@@ -828,11 +828,11 @@ $$  P_k = ((2k-1)x P_{k-1}(x) - (k-1) P_{k-2}(x))/k $$
 <p>with $$ P_1 = x $$</p>
 <p>The idea is that we substitute and use orthogonality:</p>
 $$
-\begin{align}
+\begin{aligned}
 F_k = \int_{-1}^1 P_k \cdot P_k dx &amp;= k^{-1} \int_{-1}^1 ((2k-1) x \cdot P_{k-1} \cdot P_{k}) - (k-1) \cdot P_{k-2} \cdot P_{k} dx \\
 &amp;= \frac{2k-1}{k} \int_{-1}^1 x \cdot P_{k-1} \cdot P_{k} dx - \frac{k-1}{k} \cdot \int_{-1}^1 P_{k-2} \cdot P_{k} dx \\
 &amp;= \frac{2k-1}{k} \int_{-1}^1  x \cdot P_{k-1} \cdot P_{k} dx \\
-\end{align}
+\end{aligned}
 $$<p>because $P_k \cdot P_q = 0$ for $k\neq q$.</p>
 
 </div>
@@ -853,7 +853,7 @@ $$x P_{k} = \left( (k+1)P_{k+1} + k P_{k-1} \right) / (2k+1)$$
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Using this idea we obtain</p>
 $$
-\begin{align}
+\begin{aligned}
 F_k  &amp;= \frac{2k-1}{k} \int_{-1}^1  x \cdot P_{k} \cdot P_{k-1} dx \\
 &amp;= \frac{2k-1}{k} \int_{-1}^1  P_{k-1} \cdot \left( (k+1)P_{k+1} + k P_{k-1} \right) / (2k+1) dx \\
 &amp;= \frac{2k-1}{k} \cdot \frac{k+1}{2k+1} \int_{-1}^1   P_{k-1} \cdot P_{k+1} dx +  \frac{2k-1}{2k+1}\int_{-1}^1P_{k-1}^2 dx) \\
@@ -861,7 +861,7 @@ F_k  &amp;= \frac{2k-1}{k} \int_{-1}^1  x \cdot P_{k} \cdot P_{k-1} dx \\
 &amp;= \frac{2k-1}{2k+1} \cdot \frac{2k-3}{2k-1} F_{k-2} \\
 &amp;= \frac{1}{2k+1} F_{0} \\
 &amp;= \frac{2}{2k+1}
-\end{align}
+\end{aligned}
 $$<p>because
 
 $$F_{0} = \int_{-1}^1 P_0(x)^2 dx = \int_{-1}^1 1 dx = 2$$
