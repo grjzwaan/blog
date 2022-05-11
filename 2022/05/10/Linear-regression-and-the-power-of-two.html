@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Linear regression and the power of two | vanderzwaan.dev</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Linear regression and the power of two" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A good answer why we minimize squared differences" />
+<meta property="og:description" content="A good answer why we minimize squared differences" />
+<link rel="canonical" href="vanderzwaan.dev/2022/05/10/Linear-regression-and-the-power-of-two.html" />
+<meta property="og:url" content="vanderzwaan.dev/2022/05/10/Linear-regression-and-the-power-of-two.html" />
+<meta property="og:site_name" content="vanderzwaan.dev" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-05-10T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"A good answer why we minimize squared differences","mainEntityOfPage":{"@type":"WebPage","@id":"vanderzwaan.dev/2022/05/10/Linear-regression-and-the-power-of-two.html"},"url":"vanderzwaan.dev/2022/05/10/Linear-regression-and-the-power-of-two.html","@type":"BlogPosting","headline":"Linear regression and the power of two","dateModified":"2022-05-10T00:00:00-05:00","datePublished":"2022-05-10T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="vanderzwaan.dev/feed.xml" title="vanderzwaan.dev" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126301727-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-126301727-2');
+</script>
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">vanderzwaan.dev</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Linear regression and the power of two</h1><p class="page-description">A good answer why we minimize squared differences</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-05-10T00:00:00-05:00" itemprop="datePublished">
+        May 10, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/grjzwaan/blog/tree/master/_notebooks/2022-05-11 Linear regression and the power of two.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/grjzwaan/blog/master?filepath=_notebooks%2F2022-05-11+Linear+regression+and+the+power+of+two.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/grjzwaan/blog/blob/master/_notebooks/2022-05-11 Linear regression and the power of two.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-05-11 Linear regression and the power of two.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In linear regression we want to find a linear relation between explanatory variables and a response value. For example we want to find out how the house price (=response value) relates to the size of the house and it's location (=explanatory variables).</p>
+<p>The response value has to be a continous value like house prices. (There is a variation called <em>logistic regression</em> for discrete outcomes).</p>
+<p>Linear regression is typically the first estimation method you learn. But why do we minimize the <em>squared</em> sum of differences between the observed responses and the responses of the linear approximation? (This is also called Least Squares)</p>
+<p>
+$$ \min_c  \sum \left( (\underbrace{c_0 + c_1 \cdot x}_{\text{Approximation}} ) - \underbrace{y}_{\text{Response}} \right)^2 $$
+</p>
+<p>Especially outside math/computer science/econometry courses this is handwaved as "Two is a good compromise". Indeed it is, it has to property that all differences (or errors) are positive. This means that an underestimation does not cancel out an overestimation. Additionally, it ensures that many small errors are preferred to few large errors.</p>
+<p>Perhaps you want to know a better answer. Then read this. Otherwise don't :) It turns out if we take a detour through random variables we derive the 2.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Rephrasing-with-random-variables">Rephrasing with random variables<a class="anchor-link" href="#Rephrasing-with-random-variables"> </a></h2><p>A trick that is often used is to declare that there is a random unobserved factor in play. Even though the process might be completely deterministic. You can argue that horrendous deterministic complexity is random to a simple observer, like a linear approximation of a high dimension function.</p>
+<p>We can then rephrase the questions as: find a linear relation between explanatory variables and a response value that minimizes the unexplained random factor:</p>
+<p>
+$$ y_i = c_0 + c_1 \cdot x_i + \epsilon_i $$
+</p>
+<p>The previous approach to minimize the squared sum of errors is the same as minimizing the sum of squared unexplained random factors $\epsilon$.</p>
+<p>To work with this randomness we need to know or assume on how the randomness behaves. Typically we assume the error is independent identically normally distributed (Gaussian).</p>
+<p>This is not always reasonable but it is a very good starting point. Independence and identical are quite often true (enough). Because of the Central Limit Theorem we know that a sum of random variables converges to a normal distribution.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Maximum-likelihood">Maximum likelihood<a class="anchor-link" href="#Maximum-likelihood"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Maximum likelihood is a method of estimating the parameters of an unknown random distribution. Distribution is just a word to describe the possible values and their chances the random variable takes. In our case we are interested in estimating the <em>mean</em> ($\mu$) and <em>standard deviation</em> ($\sigma$) of the random factor $\epsilon$.</p>
+<p>The possible values and their changes (likelihood) of occuring can be described by the probability density function (PDF). This function caputures this information. The CDF is the cumulative version.</p>
+<p>There is a slight tricky notion that $pdf(5)$ is <em>not</em> the probablity that the random variable has value 5, but the <em>density</em>. The random variable is continuous and there are infinite values in any interval. However the integral (weighted sum) $\int_{4 &lt; x &lt; 5} pdf(x) d x$ is the probability that x is between 4 and 5.</p>
+<p>If this confuses you just assume density is <em>almost</em> the probability.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The maximum likelihood of values $x$ occuring is defined as multiplying all densities for each individual $x$. If you read probability instead of density you get the intuition that his quantity relates to the probability of <em>all</em> $x$ occuring simultaneously. Maximimizing this quantity amounts to maximizing the probability.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="So...how-does-this-work-out?">So...how does this work out?<a class="anchor-link" href="#So...how-does-this-work-out?"> </a></h2><p>Using maximum likelihood we want to maximize the likelihood that $y_i$ occurs given $x_i$ with parameters $c_0, c_1$ and $\sigma$:</p>
+$$ LH(y | x; c_0, c_1, \sigma) = \prod_i pdf(y_i | x_i; c_0, c_1, \sigma)  $$<p></p>
+<p>The PDF of the normal distribution is defined as 
+
+$$ pdf(x; \mu, \sigma) = \frac{1}{\sigma \sqrt(2\pi)} \exp \left[ -\frac{1}{2} \left(\frac{x - \mu}{\sigma}\right)^2 \right] $$
+</p>
+<p>We then get:
+$$
+\begin{aligned}
+LLH(y | x; c_0, c_1, \sigma) 
+&amp;= \sum_i \log pdf(y_i | x_i; c_0, c_1, \sigma)  \\
+&amp;= \sum_i \log 
+\left( \frac{1}{\sigma \sqrt(2\pi)} 
+    \exp \left[ 
+        -\frac{1}{2} \left( 
+                \frac{\left( c_0 + c_1\cdot x_i \right) - y_i}{\sigma} 
+            \right)^2 
+    \right] 
+\right) \\
+&amp;= \sum_i \log \frac{1}{\sigma \sqrt(2\pi)} + 
+    \left(
+        -\frac{1}{2} \left( 
+                \frac{\left( c_0 + c_1\cdot x_i \right) - y_i}{\sigma} 
+            \right)^2 
+    \right) \\
+\end{aligned}
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can already see that, ignoring $\sigma$, maximizing LLH is equivalent to minimizing least squares. In least squares we did not optimize over $\sigma$.  To show it also works out if $\sigma$ would be optimized over we show that the estimation of $\sigma$ depends on $c_0$, $c_1$, $x$ and $y$.</p>
+<p>Feel free to skip the last step as it requires more algebra.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note: Before we mentioned that the error has a mean $\mu$ and standard deviation $\sigma$. In our case $\mu$ is superfluous as if it would be non-zero we would set $c_0 := c_0 + \mu$ and $\mu := 0$ and all calculations would work out the same.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Last-step">Last step<a class="anchor-link" href="#Last-step"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We show here that the estimation of $\sigma$ is defined in terms of other parameters and the variables, and is simply the sample standard deviation:</p>
+<p>
+$$ \sigma^2 = \frac{1}{n} \sum_i ((c_0 + c_1 \cdot x_i) - y_i)^2 $$
+</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The optimal set of parameters that maximize $LLH$ has the property that the partial derivates are zero:</p>
+$$
+\begin{aligned}
+\frac{\partial LLH}{\partial c_0} &amp;= 0 = -\frac{1}{\sigma^2} \sum_i (c_0 + c_1x_i-y_i) \\
+\frac{\partial LLH}{\partial c_1} &amp; = 0 = -\frac{1}{\sigma^2} \sum_i (c_0 x_i + c_1x_i^2-x_iy_i) \\ 
+\end{aligned}
+$$<p>Then 
+$$
+\begin{aligned}
+\frac{\partial LLH}{\partial \sigma} &amp;= - \frac{n}{2\sigma^2} + \left( \frac{1}{2} \sum_i \left( \left( c_0 + c_1\cdot x_i \right) - y_i \right)^2 \right) \left( \frac{1}{(\sigma^2)^2}\right) \\
+ &amp;= \frac{1}{2\sigma^2} \left(   \frac{1}{\sigma^2} \sum_i \left( \left( c_0 + c_1\cdot x_i \right) - y_i \right)^2  - n  \right)
+\end{aligned}
+$$
+Which is only zero if 
+
+$$ \sigma^2 = \frac{1}{n} \sum_i \left( \left( c_0 + c_1\cdot x_i \right) - y_i \right)^2 $$
+</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion"> </a></h2><p>Now you know 2.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><a class="u-url" href="/2022/05/10/Linear-regression-and-the-power-of-two.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Blog of Ruben van der Zwaan</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/grjzwaan" target="_blank" title="grjzwaan"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
